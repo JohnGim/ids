@@ -1,0 +1,23 @@
+
+#### the first task: mapping from event log to the traces, using log event file as input
+#### As shown on the command script, input is the /input/HZ-final-log.tsv, output is /output/DFR_temp
+
+hadoop jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.4.jar \
+-file /usr/local/hadoop/instruction-code/pm_mapper1.py \
+-mapper "python pm_mapper1.py" \
+-file /usr/local/hadoop/instruction-code/pm_reducer1.py \
+-reducer "python pm_reducer1.py" \
+-input /input/HZ-final-log.tsv \
+-output /output/DFR_temp
+
+
+#### the second task: mapping traces to DFR, using the output of task1 as input
+#### As shown on the command script, input is the /output/DFR_temp/part-00000, output is /output/DFR-final
+
+hadoop jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.4.jar \
+ -file /usr/local/hadoop/instruction-code/pm_mapper2.py \
+ -mapper "python pm_mapper2.py" \
+ -file /usr/local/hadoop/instruction-code/pm_reducer2.py \
+ -reducer "python pm_reducer2.py" \
+ -input /output/DFR_temp/part-00000 \
+ -output /output/DFR-final
