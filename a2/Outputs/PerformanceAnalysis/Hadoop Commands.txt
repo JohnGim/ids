@@ -1,9 +1,0 @@
-
-#### mapping from event log to the <case, service time> list, using log event file as input
-hadoop jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.4.jar \
--file /usr/local/hadoop/instruction-code/pa_mapper.py \
--mapper "python pa_mapper.py" \
--file /usr/local/hadoop/instruction-code/pa_reducer.py \
--reducer "python pa_reducer.py" \
--input /input/HZ-final-log.tsv \
--output /output/P_Analyse
